@@ -486,8 +486,8 @@ hr {
     <a href="#s2-mockups" class="indent">Pantallas Opcion A</a>
     <a href="#s3-1" class="indent">Opcion B: Fotos tempranas</a>
     <a href="#s3-2" class="indent">Opcion C: TyC combinado</a>
-    <a href="#s3-3" class="indent">Opcion E: OCR frontal (Recomendado)</a>
-    <a href="#s3-3-mockups" class="indent">Pantallas Opcion E</a>
+    <a href="#s3-3" class="indent">Opcion D: OCR frontal (Recomendado)</a>
+    <a href="#s3-3-mockups" class="indent">Pantallas Opcion D</a>
     <a href="#s4">Preguntas clave</a>
     <a href="#p1" class="indent">Timeout FOSIGA</a>
     <a href="#p2" class="indent">Email Ubica</a>
@@ -647,7 +647,7 @@ hr {
   <li><strong>Opcion A:</strong> "Descartar primero lo que no cuesta" — datos manuales primero, validaciones con costo despues</li>
   <li><strong>Opcion B:</strong> Fotos tempranas — capturar las 3 fotos antes de Preselecta</li>
   <li><strong>Opcion C:</strong> TyC combinado con datos basicos — un solo formulario con todo</li>
-  <li><strong>Opcion E:</strong> Foto frontal temprana para OCR — solo la foto frontal antes de Preselecta <span class="badge badge--accent">RECOMENDADA</span></li>
+  <li><strong>Opcion D:</strong> Foto frontal temprana para OCR — solo la foto frontal antes de Preselecta <span class="badge badge--accent">RECOMENDADA</span></li>
 </ul>
 
 <p>A continuacion el detalle de cada una.</p>
@@ -1141,7 +1141,7 @@ FASE 7: RESULTADO
 </div>
 
 <div class="callout callout--danger">
-  <p><strong>Limitacion de la Opcion A:</strong> El primer apellido lo escribe el usuario manualmente. Si lo escribe mal (ambos apellidos juntos, tildes incorrectas, abreviaciones), la consulta a Preselecta se desperdicia. Esta limitacion se resuelve con la Opcion E.</p>
+  <p><strong>Limitacion de la Opcion A:</strong> El primer apellido lo escribe el usuario manualmente. Si lo escribe mal (ambos apellidos juntos, tildes incorrectas, abreviaciones), la consulta a Preselecta se desperdicia. Esta limitacion se resuelve con la Opcion D.</p>
 </div>
 
 <hr>
@@ -1260,7 +1260,7 @@ FASE 7: RESULTADO
 </div>
 
 <!-- ==================== OPCION E ==================== -->
-<h3 id="s3-3">Opcion E: Foto Frontal Temprana para OCR <span class="badge badge--accent">FLUJO RECOMENDADO</span></h3>
+<h3 id="s3-3">Opcion D: Foto Frontal Temprana para OCR <span class="badge badge--accent">FLUJO RECOMENDADO</span></h3>
 
 <p><strong>Origen:</strong> Esta opcion nace de la pregunta clave sobre como garantizar que el primer apellido se ingrese correctamente para no malgastar consultas a Preselecta. Preselecta requiere <code>documento + primer apellido exacto + fecha expedicion</code>, y si el usuario escribe mal el apellido (ej: pone ambos apellidos, o con tildes/errores), la consulta se desperdicia.</p>
 
@@ -1298,14 +1298,14 @@ FASE 7: RESULTADO
 </ul>
 
 <!-- MOCKUPS OPCION E -->
-<h3 id="s3-3-mockups">Simulacion de pantallas — Opcion E (Recomendado)</h3>
+<h3 id="s3-3-mockups">Simulacion de pantallas — Opcion D (Recomendado)</h3>
 <p>Las pantallas del paso ①, ②, ③ son iguales a la Opcion A. A partir del paso ④ cambia:</p>
 
 <div class="mockups-row">
 
   <!-- Paso 4: Foto frontal OCR -->
   <div class="phone" style="border-color:var(--accent);">
-    <div class="phone-step" style="color:var(--accent);">Opcion E — Paso 4 (NUEVO)</div>
+    <div class="phone-step" style="color:var(--accent);">Opcion D — Paso 4 (NUEVO)</div>
     <div class="phone-title">Foto frontal documento</div>
     <div class="phone-text">Toma una foto clara de la parte frontal de tu cedula para extraer tus datos automaticamente.</div>
     <div class="phone-camera">
@@ -1323,7 +1323,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 5: Confirmar datos OCR -->
   <div class="phone" style="border-color:var(--accent);">
-    <div class="phone-step" style="color:var(--accent);">Opcion E — Paso 5 (NUEVO)</div>
+    <div class="phone-step" style="color:var(--accent);">Opcion D — Paso 5 (NUEVO)</div>
     <div class="phone-title">Confirma tus datos</div>
     <div class="phone-text">Extrajimos estos datos de tu documento. Verifica que sean correctos:</div>
     <div class="phone-label">Nombre</div>
@@ -1346,7 +1346,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 6: Datos complementarios -->
   <div class="phone">
-    <div class="phone-step">Opcion E — Paso 6</div>
+    <div class="phone-step">Opcion D — Paso 6</div>
     <div class="phone-title">Datos complementarios</div>
     <div class="phone-text">Completa los datos que no pudimos extraer del documento:</div>
     <div class="phone-label">Fecha de nacimiento</div>
@@ -1377,7 +1377,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 7: Validaciones -->
   <div class="phone">
-    <div class="phone-step">Opcion E — Paso 7</div>
+    <div class="phone-step">Opcion D — Paso 7</div>
     <div class="phone-title">Validaciones de fondo</div>
     <div class="phone-loader">
       <div class="phone-loader-spinner"></div>
@@ -1395,7 +1395,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 7 FIN -->
   <div class="phone">
-    <div class="phone-step" style="color:var(--red);">Opcion E — Paso 7 (si no pasa)</div>
+    <div class="phone-step" style="color:var(--red);">Opcion D — Paso 7 (si no pasa)</div>
     <div class="phone-title" style="color:var(--red);">Solicitud no viable</div>
     <div class="phone-error">
       <div class="phone-error-icon">&#10060;</div>
@@ -1409,7 +1409,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 8: Selfie + Reverso -->
   <div class="phone">
-    <div class="phone-step" style="color:var(--green);">Opcion E — Paso 8 (solo viables)</div>
+    <div class="phone-step" style="color:var(--green);">Opcion D — Paso 8 (solo viables)</div>
     <div class="phone-title">Prueba de vida y reverso</div>
     <div class="phone-text">Solo llegas aqui si eres viable. Ahora completamos la verificacion:</div>
     <div class="phone-camera" style="height:100px;">
@@ -1435,7 +1435,7 @@ FASE 7: RESULTADO
 <div class="mockups-row">
   <!-- Paso 9: Ubica -->
   <div class="phone">
-    <div class="phone-step">Opcion E — Paso 9</div>
+    <div class="phone-step">Opcion D — Paso 9</div>
     <div class="phone-title">Verificacion de identidad</div>
     <div class="phone-text">Hola <strong>FRANCISCO</strong>, necesitamos verificar tu identidad. Este proceso es sencillo y seguro.</div>
     <hr class="phone-divider">
@@ -1455,7 +1455,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 9b: OTP email Ubica -->
   <div class="phone">
-    <div class="phone-step">Opcion E — Paso 9 (cont.)</div>
+    <div class="phone-step">Opcion D — Paso 9 (cont.)</div>
     <div class="phone-title">Verificacion email</div>
     <div class="phone-text">Hemos enviado un codigo al correo electronico <strong>f***@gmail.com</strong> (registrado en centrales).</div>
     <div class="phone-otp">
@@ -1473,7 +1473,7 @@ FASE 7: RESULTADO
 
   <!-- Paso 10: Resultado -->
   <div class="phone" style="border-color:var(--green);">
-    <div class="phone-step" style="color:var(--green);">Opcion E — Paso 10</div>
+    <div class="phone-step" style="color:var(--green);">Opcion D — Paso 10</div>
     <div class="phone-title" style="text-align:center;">Resultado</div>
     <div class="phone-result">
       <img src="assets/quac-1.png" alt="QUAC" style="width:100px;height:auto;margin:0 auto;display:block;">
