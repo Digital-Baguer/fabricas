@@ -1299,7 +1299,128 @@ FASE 7: RESULTADO
 
 <!-- MOCKUPS OPCION E -->
 <h3 id="s3-3-mockups">Simulacion de pantallas — Opcion D (Recomendado)</h3>
-<p>Las pantallas del paso ①, ②, ③ son iguales a la Opcion A. A partir del paso ④ cambia:</p>
+<p>Flujo completo de 10 pasos. Los pasos 1 a 3 son comunes con la Opcion A. A partir del paso 4 se introduce el OCR de la foto frontal.</p>
+
+<div class="mockups-row">
+
+  <!-- Paso 1: Documento -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 1</div>
+    <div class="phone-title">Solicitud de credito</div>
+    <div class="phone-text">Para iniciar tu solicitud de credito, necesitamos algunos datos basicos.</div>
+    <div class="phone-label">Tipo de documento</div>
+    <div class="phone-input phone-select">Cedula de Ciudadania</div>
+    <div class="phone-label">Numero de documento</div>
+    <div class="phone-input">1.234.567.890</div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>document_type</span> <span>document_number</span>
+    </div>
+  </div>
+
+  <!-- Paso 1b: Loader validacion -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 1 (validacion)</div>
+    <div class="phone-title">Validacion inicial</div>
+    <div class="phone-loader">
+      <div class="phone-loader-spinner"></div>
+      <div class="phone-loader-text">Validando informacion...</div>
+    </div>
+    <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;margin-top:8px;">
+      <strong>Validaciones:</strong><br>
+      ✓ GET Cartera/Resumen/{doc}<br>
+      ✓ POST Credito/ConsultarProcesoSolicitud<br>
+      ✓ Guardar log
+    </div>
+  </div>
+
+  <!-- Paso 2: TyC -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 2</div>
+    <div class="phone-title">Terminos y condiciones</div>
+    <div class="phone-text">Para continuar, acepta los terminos y condiciones:</div>
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Politica de tratamiento de datos</span>
+    </div>
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Autorizacion consulta a centrales de riesgo</span>
+    </div>
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Contrato de credito</span>
+    </div>
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Contrato de fianza</span>
+    </div>
+    <div class="phone-btn">Acepto y continuo</div>
+  </div>
+
+</div>
+
+<div class="mockups-row">
+
+  <!-- Paso 2b: Celular -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 2 (celular)</div>
+    <div class="phone-title">Numero de celular</div>
+    <div class="phone-text">Usaremos tu numero para enviarte un codigo de verificacion y confirmar tu aceptacion de los terminos.</div>
+    <div class="phone-label">Celular</div>
+    <div class="phone-input">318 456 7890</div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>phone</span>
+    </div>
+  </div>
+
+  <!-- Paso 2c: OTP -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 2 (OTP)</div>
+    <div class="phone-title">Verificacion OTP</div>
+    <div class="phone-text">Hemos enviado un codigo SMS al numero <strong>318 *** 890</strong>. Una vez lo recibas ingresalo.</div>
+    <div class="phone-otp">
+      <div class="phone-otp-box">4</div>
+      <div class="phone-otp-box">7</div>
+      <div class="phone-otp-box">2</div>
+      <div class="phone-otp-box">9</div>
+    </div>
+    <div style="text-align:center;margin-bottom:8px;">
+      <a style="font-size:12px;color:var(--accent);text-decoration:none;">Reenviar codigo</a>
+       ·
+      <a style="font-size:12px;color:var(--accent);text-decoration:none;">Llamar al celular</a>
+    </div>
+    <div class="phone-btn">Verificar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>tyc_accepted_at</span> <span>tyc_otp_validated</span>
+    </div>
+  </div>
+
+  <!-- Paso 3: Fecha expedicion -->
+  <div class="phone">
+    <div class="phone-step">Opcion D — Paso 3</div>
+    <div class="phone-title">Fecha de expedicion</div>
+    <div class="phone-text">Confirma la fecha de expedicion de tu cedula.</div>
+    <div class="phone-label">Numero de documento</div>
+    <div class="phone-input" style="background:var(--code-bg);opacity:0.7;">1.234.567.890 (solo lectura)</div>
+    <div class="phone-label">Fecha de expedicion</div>
+    <div style="display:flex;gap:6px;">
+      <div class="phone-input" style="flex:1;text-align:center;">15</div>
+      <div class="phone-input" style="flex:1;text-align:center;">Mar</div>
+      <div class="phone-input" style="flex:1;text-align:center;">2015</div>
+    </div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>expedition_date</span>
+    </div>
+  </div>
+
+</div>
 
 <div class="mockups-row">
 
