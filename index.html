@@ -480,13 +480,13 @@ hr {
     <a href="#s1">Flujo canal web</a>
     <a href="#flujo-actual" class="indent">Flujo actual</a>
     <a href="#s1-2" class="indent">Embudo de solicitudes</a>
-    <a href="#opciones">Opciones evaluadas</a>
+    <a href="#opciones">Opciones de flujo evaluadas</a>
     <a href="#s2" class="indent">Opcion A: Descartar primero</a>
-    <a href="#s2-diagram" class="indent">Diagrama detallado</a>
+    <a href="#s2-diagram" class="indent">Diagrama detallado Opcion A</a>
     <a href="#s2-mockups" class="indent">Pantallas Opcion A</a>
     <a href="#s3-1" class="indent">Opcion B: Fotos tempranas</a>
     <a href="#s3-2" class="indent">Opcion C: TyC combinado</a>
-    <a href="#s3-3" class="indent">Opcion E (Recomendado)</a>
+    <a href="#s3-3" class="indent">Opcion E: OCR frontal (Recomendado)</a>
     <a href="#s3-3-mockups" class="indent">Pantallas Opcion E</a>
     <a href="#s4">Preguntas clave</a>
     <a href="#p1" class="indent">Timeout FOSIGA</a>
@@ -613,6 +613,28 @@ hr {
   <li><strong>De las que llegan a Preselecta, el ~67% no son viables.</strong> Este dato incluye tanto rechazos reales como posibles consultas desperdiciadas por datos incorrectos (primer apellido mal escrito, por ejemplo). No es posible distinguirlos con la data actual, pero es exactamente el riesgo que justifica capturar el primer apellido via OCR antes de consultar Preselecta.</li>
   <li><strong>El volumen mensual oscila entre 5,000 y 10,000 solicitudes</strong>, lo cual hace que cualquier ahorro por solicitud sea significativo.</li>
 </ol>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:14px;margin:28px 0 8px;">
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:8px;">Solicitudes / mes</div>
+    <div style="font-size:36px;font-weight:800;color:var(--accent);letter-spacing:-0.03em;line-height:1;">5K–10K</div>
+  </div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:8px;">No llegan a Preselecta</div>
+    <div style="font-size:36px;font-weight:800;color:var(--red);letter-spacing:-0.03em;line-height:1;">54%</div>
+    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">abandono, expiracion, validaciones</div>
+  </div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:8px;">No viables en Preselecta</div>
+    <div style="font-size:36px;font-weight:800;color:var(--amber);letter-spacing:-0.03em;line-height:1;">67%</div>
+    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">de las que llegan</div>
+  </div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:8px;">Viables del total</div>
+    <div style="font-size:36px;font-weight:800;color:var(--green);letter-spacing:-0.03em;line-height:1;">13%</div>
+    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">709 de 5,493 (ene 2026)</div>
+  </div>
+</div>
 
 <hr>
 
@@ -1125,8 +1147,6 @@ FASE 7: RESULTADO
 <hr>
 
 <!-- ==================== SECCION 3 ==================== -->
-<h2 id="s3">Flujos alternativos</h2>
-
 <h3 id="s3-1">Opcion B: Fotos Tempranas (despues de documento)</h3>
 
 <p><strong>Propuesto por:</strong> Miembro del equipo<br>
