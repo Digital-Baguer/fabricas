@@ -488,6 +488,8 @@ hr {
     <a href="#s3-2" class="indent">Opcion C: TyC combinado</a>
     <a href="#s3-3" class="indent">Opcion D: OCR frontal (Recomendado)</a>
     <a href="#s3-3-mockups" class="indent">Pantallas Opcion D</a>
+    <a href="#s3-4" class="indent">Opcion E: Flujo sugerido</a>
+    <a href="#s3-4-mockups" class="indent">Pantallas Opcion E</a>
     <a href="#s4">Preguntas clave</a>
     <a href="#p1" class="indent">Timeout FOSIGA</a>
     <a href="#p2" class="indent">Email Ubica</a>
@@ -652,6 +654,7 @@ hr {
   <li><strong>Opcion B:</strong> Fotos tempranas — capturar las 3 fotos antes de Preselecta</li>
   <li><strong>Opcion C:</strong> TyC combinado con datos basicos — un solo formulario con todo</li>
   <li><strong>Opcion D:</strong> Foto frontal temprana para OCR — solo la foto frontal antes de Preselecta <span class="badge badge--accent">RECOMENDADA</span></li>
+  <li><strong>Opcion E:</strong> Flujo sugerido — TyC con datos basicos y escaneo opcional de cedula <span class="badge badge--green">SUGERIDO</span></li>
 </ul>
 
 <p>A continuacion el detalle de cada una.</p>
@@ -1608,6 +1611,410 @@ FASE 7: RESULTADO
       <div style="font-size:12px;color:var(--text-secondary);margin-top:12px;line-height:1.5;">Para activar tu credito, acercate a una tienda fisica o realiza tu primera compra en linea.</div>
     </div>
   </div>
+</div>
+
+<hr>
+
+<!-- ==================== OPCION E ==================== -->
+<h3 id="s3-4">Opcion E: Flujo Sugerido — Datos con TyC y Escaneo Opcional <span class="badge badge--green">SUGERIDO</span></h3>
+
+<p><strong>Origen:</strong> Evoluciona desde la Opcion D simplificando el flujo. En lugar de obligar al usuario a tomar una foto del documento, se le ofrece como opcion: un boton "Escanear Cedula" que abre una modal para subir foto frontal y reverso. Si escanea, los datos se autocompletan; si no, tipea manualmente. Se combina la aceptacion de TyC con los datos basicos en un solo paso.</p>
+
+<p><strong>Concepto:</strong> Menos pantallas, mas opciones para el usuario. La fecha de expedicion se captura en el paso 1 junto con el documento. TyC y datos basicos van en un solo formulario con un checkbox explicito de aceptacion al final (con link para ver los documentos completos en una modal). El flujo de fotos es adaptativo: si ya escaneo la cedula, solo se pide prueba de vida; si no, se captura todo despues de Preselecta.</p>
+
+<pre><code>P1: IDENTIFICACION
+  Tipo doc + Nro doc + Fecha expedicion
+     → [Continuar]
+
+P2: VALIDACIONES INICIALES (pantalla de carga)
+  Validar cartera activa, proceso en curso, rechazo reciente
+     → Si no puede iniciar → FIN (mensaje)
+
+P3: DATOS BASICOS + ACEPTACION TyC
+  Nombre + Primer apellido + Segundo apellido
+  Celular + Correo electronico + Fecha de nacimiento
+  [Escanear Cedula] (opcional: abre modal, foto frontal + reverso → autocompleta)
+  ☑ Confirmo que acepto los terminos y condiciones, las politicas
+    del credito, el tratamiento de datos y la consulta a centrales
+     → [Continuar]
+
+P4: VALIDACIONES DE FONDO (pantalla de carga)
+  Crear el cliente en el sistema
+  Antecedentes → Si tiene → FIN
+  Preselecta → Si no viable → FIN
+  FOSIGA (condicional) → Si no cotiza → FIN
+
+P5: DONDE VIVES?
+  Departamento + Ciudad + Direccion + Barrio
+     → [Continuar]
+
+P6: PRUEBA DE VIDA Y FOTOS
+  Si ya escaneo cedula → solo prueba de vida (selfie)
+  Si NO escaneo → selfie + foto frontal + foto reverso
+
+P7: VALIDACION DE FOTOS + UBICA (pantalla de carga)
+  Validacion de fotos con IA (Rekognition)
+  Consulta Ubica (verificacion de identidad)
+
+P8: VERIFICACION POR CORREO
+  Token de verificacion al correo electronico
+     → [Verificar]
+
+P9: RESULTADO
+  Asignacion de cupo → pantalla de resultado</code></pre>
+
+<p><strong>Ventajas:</strong></p>
+<ul>
+  <li><strong>Menos pantallas:</strong> La fecha de expedicion va en el paso 1. TyC y datos basicos en un solo formulario. El flujo tiene 9 pasos vs 10 de la Opcion D</li>
+  <li><strong>Escaneo opcional:</strong> El usuario decide si escanea su cedula. Esto evita obligar a usar la camara temprano, reduciendo abandonos</li>
+  <li><strong>Autocompletado inteligente:</strong> Si escanea, los datos se autocompletan (nombre, apellidos) desde el OCR del documento. Si no escanea, tipea manualmente</li>
+  <li><strong>Flujo adaptativo de fotos:</strong> Si ya escaneo, en el paso 6 solo prueba de vida (selfie). Si no, se captura selfie + frontal + reverso</li>
+  <li><strong>TyC legalmente explicito:</strong> Checkbox al final del formulario con link a los documentos completos. Es un acto consciente de aceptacion, separado de la captura de datos</li>
+  <li><strong>Ahorro en Rekognition:</strong> Las validaciones con costo (Rekognition completo, Ubica) solo se ejecutan para viables (~13% del total)</li>
+</ul>
+
+<p><strong>Consideraciones:</strong></p>
+<ul>
+  <li>Si el usuario no escanea, el primer apellido se tipea manualmente (mismo riesgo de error que la Opcion A en la consulta a Preselecta)</li>
+  <li>El formulario de P3 tiene 6 campos + checkbox + boton de escaneo. En mobile puede requerir scroll</li>
+</ul>
+
+<!-- MOCKUPS OPCION E -->
+<h3 id="s3-4-mockups">Simulacion de pantallas — Opcion E (Sugerido)</h3>
+<p>Flujo completo de 9 pasos. Los campos en <span class="badge badge--green">verde</span> indican datos autocompletados por escaneo de cedula.</p>
+
+<div class="mockups-row">
+
+  <!-- P1: Documento + fecha expedicion -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 1</div>
+    <div class="phone-title">Solicitud de credito</div>
+    <div class="phone-text">Para iniciar tu solicitud de credito, necesitamos algunos datos basicos.</div>
+    <div class="phone-label">Tipo de documento</div>
+    <div class="phone-input phone-select">Cedula de Ciudadania</div>
+    <div class="phone-label">Numero de documento</div>
+    <div class="phone-input">1.234.567.890</div>
+    <div class="phone-label">Fecha de expedicion</div>
+    <div style="display:flex;gap:6px;">
+      <div class="phone-input" style="flex:1;text-align:center;">15</div>
+      <div class="phone-input" style="flex:1;text-align:center;">Mar</div>
+      <div class="phone-input" style="flex:1;text-align:center;">2015</div>
+    </div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>document_type</span> <span>document_number</span> <span>expedition_date</span>
+    </div>
+  </div>
+
+  <!-- P2: Validaciones iniciales -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 2</div>
+    <div class="phone-title">Validando informacion</div>
+    <div class="phone-loader">
+      <div class="phone-loader-spinner"></div>
+      <div class="phone-loader-text">Validando informacion...</div>
+    </div>
+    <div style="font-size:11px;color:var(--text-secondary);line-height:1.8;margin-top:8px;">
+      <strong>Validaciones:</strong><br>
+      ✓ Verificar cartera activa<br>
+      ✓ Verificar proceso en curso<br>
+      ✓ Verificar rechazo reciente<br><br>
+      <span style="color:var(--red)">Si no puede iniciar → FIN</span>
+    </div>
+  </div>
+
+  <!-- P3: Datos basicos + TyC (manual) -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 3</div>
+    <div class="phone-title">Datos basicos</div>
+    <div class="phone-label">Nombre</div>
+    <div class="phone-input">Francisco</div>
+    <div class="phone-label">Primer apellido</div>
+    <div class="phone-input">Garcia</div>
+    <div class="phone-label">Segundo apellido</div>
+    <div class="phone-input">Martinez</div>
+    <div class="phone-label">Celular</div>
+    <div class="phone-input">318 456 7890</div>
+    <div class="phone-label">Correo electronico</div>
+    <div class="phone-input">francisco@email.com</div>
+    <div class="phone-label">Fecha de nacimiento</div>
+    <div class="phone-input">01/05/1990</div>
+    <div style="display:block;width:100%;background:var(--white);color:var(--accent);border:2px dashed var(--accent);border-radius:8px;padding:10px;font-size:13px;font-weight:600;text-align:center;margin-top:12px;cursor:default;">Escanear Cedula (opcional)</div>
+    <div style="text-align:center;font-size:10px;color:var(--text-secondary);margin-top:4px;">Escanea tu cedula y autocompleta tus datos</div>
+    <hr class="phone-divider">
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Confirmo que acepto los <a style="color:var(--accent);text-decoration:underline;cursor:pointer;">terminos y condiciones, las politicas del credito, el tratamiento de datos y la consulta a centrales</a></span>
+    </div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>first_name</span> <span>last_name</span> <span>second_last_name</span> <span>phone</span> <span>email</span> <span>birth_date</span> <span>tyc_accepted</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockups-row">
+
+  <!-- P3: Modal documentos TyC -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 3 (modal documentos)</div>
+    <div class="phone-title">Documentos legales</div>
+    <div class="phone-text">Revisa los documentos antes de aceptar:</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="background:var(--accent-bg);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;cursor:default;">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text);">Politica de tratamiento de datos</div>
+          <div style="font-size:10px;color:var(--text-secondary);">Ley 1581 de 2012</div>
+        </div>
+        <div style="color:var(--accent);font-size:14px;">→</div>
+      </div>
+      <div style="background:var(--accent-bg);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;cursor:default;">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text);">Autorizacion consulta a centrales</div>
+          <div style="font-size:10px;color:var(--text-secondary);">CIFIN / DataCredito</div>
+        </div>
+        <div style="color:var(--accent);font-size:14px;">→</div>
+      </div>
+      <div style="background:var(--accent-bg);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;cursor:default;">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text);">Contrato de credito</div>
+          <div style="font-size:10px;color:var(--text-secondary);">Terminos y condiciones del cupo</div>
+        </div>
+        <div style="color:var(--accent);font-size:14px;">→</div>
+      </div>
+      <div style="background:var(--accent-bg);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;cursor:default;">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text);">Contrato de fianza</div>
+          <div style="font-size:10px;color:var(--text-secondary);">Garantia del credito</div>
+        </div>
+        <div style="color:var(--accent);font-size:14px;">→</div>
+      </div>
+    </div>
+    <div class="phone-btn" style="margin-top:14px;">Cerrar</div>
+  </div>
+
+  <!-- P3: Modal escaneo cedula -->
+  <div class="phone" style="border-color:var(--accent);">
+    <div class="phone-step" style="color:var(--accent);">Opcion E — Paso 3 (modal escaneo)</div>
+    <div class="phone-title">Escanear cedula</div>
+    <div class="phone-text">Toma una foto de cada lado de tu cedula para autocompletar tus datos.</div>
+    <div class="phone-camera" style="height:110px;">
+      <div class="phone-camera-frame" style="width:150px;height:90px;border-color:var(--accent);">
+        <div style="color:rgba(255,255,255,0.3);font-size:11px;text-align:center;">CEDULA DE<br>CIUDADANIA</div>
+      </div>
+      <div class="phone-camera-text">Foto frontal</div>
+    </div>
+    <div class="phone-camera" style="height:110px;">
+      <div class="phone-camera-frame" style="width:150px;height:90px;">
+        <div style="color:rgba(255,255,255,0.3);font-size:11px;text-align:center;">REVERSO<br>CEDULA</div>
+      </div>
+      <div class="phone-camera-text">Foto reverso</div>
+    </div>
+    <div class="phone-btn">Guardar fotos</div>
+    <div class="phone-fields-captured">
+      <p>Proceso</p>
+      <span>OCR DetectText</span> <span>Fotos guardadas</span>
+    </div>
+  </div>
+
+  <!-- P3: Con datos escaneados (autocompletados) -->
+  <div class="phone" style="border-color:var(--green);">
+    <div class="phone-step" style="color:var(--green);">Opcion E — Paso 3 (con escaneo)</div>
+    <div class="phone-title">Datos basicos</div>
+    <div class="phone-label">Nombre</div>
+    <div class="phone-input phone-input--filled">FRANCISCO</div>
+    <div class="phone-label">Primer apellido</div>
+    <div class="phone-input phone-input--filled">GARCIA</div>
+    <div class="phone-label">Segundo apellido</div>
+    <div class="phone-input phone-input--filled">MARTINEZ</div>
+    <div class="phone-label">Celular</div>
+    <div class="phone-input">318 456 7890</div>
+    <div class="phone-label">Correo electronico</div>
+    <div class="phone-input">francisco@email.com</div>
+    <div class="phone-label">Fecha de nacimiento</div>
+    <div class="phone-input">01/05/1990</div>
+    <hr class="phone-divider">
+    <div class="phone-check">
+      <div class="phone-checkbox phone-checkbox--checked">✓</div>
+      <span class="phone-check-text">Confirmo que acepto los <a style="color:var(--accent);text-decoration:underline;cursor:pointer;">terminos y condiciones...</a></span>
+    </div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Autocompletados via OCR</p>
+      <span>first_name</span> <span>last_name</span> <span>second_last_name</span>
+    </div>
+  </div>
+
+  <!-- P4: Validaciones de fondo -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 4</div>
+    <div class="phone-title">Procesando solicitud</div>
+    <div class="phone-loader">
+      <div class="phone-loader-spinner"></div>
+      <div class="phone-loader-text">Procesando solicitud...</div>
+    </div>
+    <div style="font-size:11px;color:var(--text-secondary);line-height:1.8;margin-top:8px;">
+      <strong>Secuencia:</strong><br>
+      ✓ Crear cliente en el sistema<br>
+      ✓ Antecedentes judiciales<br>
+      <span style="color:var(--red)">→ Si tiene antecedentes → FIN</span><br>
+      ✓ Preselecta (scoring crediticio)<br>
+      <span style="color:var(--red)">→ Si no viable → FIN</span><br>
+      ✓ FOSIGA (condicional)<br>
+      <span style="color:var(--red)">→ Si no cotiza → FIN</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockups-row">
+
+  <!-- P4: Rechazo -->
+  <div class="phone">
+    <div class="phone-step" style="color:var(--red);">Opcion E — Paso 4 (si no pasa)</div>
+    <div class="phone-title" style="color:var(--red);">Solicitud no viable</div>
+    <div class="phone-error">
+      <div class="phone-error-icon">&#10060;</div>
+      <div class="phone-error-text">No es posible continuar con tu solicitud de credito.</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:12px;line-height:1.5;">Lamentablemente, no podemos procesar tu solicitud en este momento. Gracias por tu interes en QUAC.</div>
+    </div>
+  </div>
+
+  <!-- P5: Donde vives -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 5</div>
+    <div class="phone-title">Donde vives?</div>
+    <div class="phone-text">Necesitamos conocer tu direccion de residencia.</div>
+    <div class="phone-label">Departamento</div>
+    <div class="phone-input phone-select">Cundinamarca</div>
+    <div class="phone-label">Ciudad</div>
+    <div class="phone-input phone-select">Bogota</div>
+    <div class="phone-label">Direccion</div>
+    <div class="phone-input">Cra 45 # 23-10</div>
+    <div class="phone-label">Barrio</div>
+    <div class="phone-input">Chapinero</div>
+    <div class="phone-btn">Continuar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>department</span> <span>city</span> <span>address</span> <span>neighborhood</span>
+    </div>
+  </div>
+
+  <!-- P6: Solo prueba de vida (ya escaneo) -->
+  <div class="phone" style="border-color:var(--green);">
+    <div class="phone-step" style="color:var(--green);">Opcion E — Paso 6 (ya escaneo)</div>
+    <div class="phone-title">Prueba de vida</div>
+    <div class="phone-text">Como ya escaneaste tu cedula, solo necesitamos verificar tu identidad con una selfie.</div>
+    <div class="phone-camera">
+      <div class="phone-camera-frame" style="width:80px;height:80px;border-radius:50%;border-color:var(--green);">
+        <div class="phone-camera-icon">&#128100;</div>
+      </div>
+      <div class="phone-camera-text">Centra tu rostro en el marco</div>
+    </div>
+    <div class="phone-btn">Capturar selfie</div>
+    <div style="margin-top:8px;">
+      <span class="badge badge--green">Solo prueba de vida</span>
+      <span style="font-size:11px;color:var(--text-secondary);margin-left:4px;">Fotos de cedula ya guardadas</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockups-row">
+
+  <!-- P6: Fotos completas (no escaneo) -->
+  <div class="phone" style="border-color:var(--amber);">
+    <div class="phone-step" style="color:var(--amber);">Opcion E — Paso 6 (sin escaneo previo)</div>
+    <div class="phone-title">Verificacion documental</div>
+    <div class="phone-text">Necesitamos verificar tu identidad. Toma una selfie y las fotos de tu cedula.</div>
+    <div class="phone-camera" style="height:80px;">
+      <div class="phone-camera-frame" style="width:60px;height:60px;border-radius:50%;">
+        <div class="phone-camera-icon" style="font-size:20px;">&#128100;</div>
+      </div>
+    </div>
+    <div style="font-size:10px;text-align:center;color:var(--text-secondary);margin:2px 0;">Selfie (prueba de vida)</div>
+    <div class="phone-camera" style="height:70px;">
+      <div class="phone-camera-frame" style="width:120px;height:55px;">
+        <div style="color:rgba(255,255,255,0.3);font-size:9px;text-align:center;">FRONTAL</div>
+      </div>
+    </div>
+    <div style="font-size:10px;text-align:center;color:var(--text-secondary);margin:2px 0;">Foto frontal cedula</div>
+    <div class="phone-camera" style="height:70px;">
+      <div class="phone-camera-frame" style="width:120px;height:55px;">
+        <div style="color:rgba(255,255,255,0.3);font-size:9px;text-align:center;">REVERSO</div>
+      </div>
+    </div>
+    <div style="font-size:10px;text-align:center;color:var(--text-secondary);margin:2px 0 8px;">Foto reverso cedula</div>
+    <span class="badge badge--amber">Verificacion completa (selfie + 2 fotos)</span>
+  </div>
+
+  <!-- P7: Validacion fotos + UBICA -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 7</div>
+    <div class="phone-title">Verificacion en proceso</div>
+    <div class="phone-loader">
+      <div class="phone-loader-spinner"></div>
+      <div class="phone-loader-text">Verificando identidad...</div>
+    </div>
+    <div style="font-size:11px;color:var(--text-secondary);line-height:1.8;margin-top:8px;">
+      <strong>Secuencia:</strong><br>
+      ✓ Validacion de selfie (prueba de vida)<br>
+      ✓ Validacion de documento (IA)<br>
+      ✓ Comparacion facial (selfie vs documento)<br>
+      ✓ Consulta Ubica (verificacion identidad)<br><br>
+      <span style="color:var(--green)">Si todo OK → continua</span>
+    </div>
+    <div class="phone-fields-captured">
+      <p>Servicios</p>
+      <span>Rekognition</span> <span>Ubica</span>
+    </div>
+  </div>
+
+  <!-- P8: Token email -->
+  <div class="phone">
+    <div class="phone-step">Opcion E — Paso 8</div>
+    <div class="phone-title">Verificacion por correo</div>
+    <div class="phone-text">Hemos enviado un codigo de verificacion al correo <strong>fran****@email.com</strong>. Ingresalo para continuar.</div>
+    <div class="phone-otp">
+      <div class="phone-otp-box">_</div>
+      <div class="phone-otp-box">_</div>
+      <div class="phone-otp-box">_</div>
+      <div class="phone-otp-box">_</div>
+    </div>
+    <div style="text-align:center;margin-bottom:8px;">
+      <a style="font-size:12px;color:var(--accent);text-decoration:none;">Reenviar codigo</a>
+    </div>
+    <div class="phone-btn">Verificar</div>
+    <div class="phone-fields-captured">
+      <p>Campos capturados</p>
+      <span>email_otp_validated</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockups-row">
+
+  <!-- P9: Resultado -->
+  <div class="phone" style="border-color:var(--green);">
+    <div class="phone-step" style="color:var(--green);">Opcion E — Paso 9</div>
+    <div class="phone-title" style="text-align:center;">Resultado</div>
+    <div class="phone-result">
+      <img src="assets/quac-1.png" alt="QUAC" style="width:100px;height:auto;margin:0 auto;display:block;">
+      <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:8px;">¡Felicidades!</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">Tu credito ha sido pre-aprobado</div>
+      <div class="phone-result-amount">$1.000.000</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:12px;line-height:1.5;">Para activar tu credito, acercate a una tienda fisica o realiza tu primera compra en linea.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="callout callout--info">
+  <p><strong>Diferencias clave con Opcion D:</strong> La Opcion E reduce pantallas (9 vs 10), hace el escaneo de cedula opcional (vs obligatorio), combina TyC con datos basicos en un paso y mueve la fecha de expedicion al paso 1. El flujo de fotos es adaptativo: si el usuario ya escaneo su cedula, solo se pide prueba de vida. Si no, se capturan las 3 fotos despues de Preselecta.</p>
 </div>
 
 <hr>
