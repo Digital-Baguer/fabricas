@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Informe: Nuevo Flujo de Solicitud de Credito QUAC (Web)</title>
+<title>Fabricas de Credito QUAC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -475,42 +475,41 @@ hr {
 <aside class="sidebar">
   <div class="sidebar-title">QUAC — Fabricas de Credito</div>
   <nav>
-    <a href="#top">Informe</a>
     <a href="#generalidades">Generalidades</a>
     <a href="#origenes" class="indent">Origenes de solicitud</a>
-    <a href="#s1" class="indent">1. Flujo Actual</a>
-    <a href="#s1-2" class="indent">1.2 Embudo de Solicitudes</a>
-    <a href="#s2">2. Opcion A</a>
-    <a href="#s2-diagram" class="indent">Diagrama Detallado</a>
-    <a href="#s2-mockups" class="indent">Mockups Opcion A</a>
-    <a href="#s3">3. Flujos Alternativos</a>
-    <a href="#s3-1" class="indent">3.1 Opcion B</a>
-    <a href="#s3-2" class="indent">3.2 Opcion C</a>
-    <a href="#s3-3" class="indent">3.3 Opcion E (Recomendado)</a>
-    <a href="#s3-3-mockups" class="indent">Mockups Opcion E</a>
-    <a href="#s4">4. Preguntas Clave</a>
-    <a href="#p1" class="indent">P1: Timeout FOSIGA</a>
-    <a href="#p2" class="indent">P2: Email Ubica</a>
-    <a href="#p3" class="indent">P3: Retomar proceso</a>
+    <a href="#s1">Flujo canal web</a>
+    <a href="#flujo-actual" class="indent">Flujo actual</a>
+    <a href="#s1-2" class="indent">Embudo de solicitudes</a>
+    <a href="#opciones">Opciones evaluadas</a>
+    <a href="#s2" class="indent">Opcion A: Descartar primero</a>
+    <a href="#s2-diagram" class="indent">Diagrama detallado</a>
+    <a href="#s2-mockups" class="indent">Pantallas Opcion A</a>
+    <a href="#s3-1" class="indent">Opcion B: Fotos tempranas</a>
+    <a href="#s3-2" class="indent">Opcion C: TyC combinado</a>
+    <a href="#s3-3" class="indent">Opcion E (Recomendado)</a>
+    <a href="#s3-3-mockups" class="indent">Pantallas Opcion E</a>
+    <a href="#s4">Preguntas clave</a>
+    <a href="#p1" class="indent">Timeout FOSIGA</a>
+    <a href="#p2" class="indent">Email Ubica</a>
+    <a href="#p3" class="indent">Retomar proceso</a>
   </nav>
 </aside>
 
 <!-- Main Content -->
 <div class="main" id="top">
 
-<h1>Informe: Nuevo Flujo de Solicitud de Credito QUAC (Web)</h1>
+<h1>Fabricas de Credito QUAC</h1>
 <div class="meta">
   <span class="meta-item"><strong>Proyecto:</strong> Fabricas de Credito</span>
   <span class="meta-item"><strong>Fecha:</strong> 2026-02-09</span>
-  <span class="meta-item"><strong>Alcance:</strong> Flujo web de solicitud de cupo — Cliente Nuevo</span>
 </div>
 
 <!-- ==================== GENERALIDADES ==================== -->
 <h2 id="generalidades">Generalidades</h2>
 
-<p>Este documento recoge el analisis, las opciones de flujo evaluadas y las recomendaciones para redisenar el proceso de solicitud de credito QUAC. El objetivo es definir un flujo unificado que sea eficiente en costos, confiable en la calidad de los datos y que minimice la friccion para el usuario.</p>
+<p>QUAC maneja todo el proceso de solicitud de cupo de credito a traves de un modulo llamado <strong>Fabricas</strong>, que hoy corre dentro del sistema Quac One. Este modulo se encarga de recibir la solicitud del cliente, validar su identidad, consultar centrales de riesgo y decidir si se le asigna cupo o no.</p>
 
-<p>El proyecto <strong>Fabricas de Credito</strong> busca rehacer por completo el flujo de solicitud de cupo, incorporando validaciones que hoy no existen (fotos, prueba de vida, antecedentes, FOSIGA, Ubica) y resolviendo problemas criticos como el desperdicio de consultas a Preselecta por datos mal ingresados.</p>
+<p>El modulo necesita una refactorizacion. Lo primero es confirmar como funcionan los flujos de navegacion en cada canal de solicitud, y a partir de ahi revisar el modelo de datos actual, los procedimientos almacenados que se usan y la arquitectura general del sistema.</p>
 
 <h3 id="origenes">Origenes de solicitud de credito</h3>
 
@@ -541,16 +540,14 @@ hr {
 
 </div>
 
-<div class="callout callout--info">
-  <p><strong>Alcance de este informe:</strong> El analisis se centra en el flujo web (Canal 1 — cliente nuevo). Las conclusiones sobre validaciones, costos y orden de pasos aplican tambien para los otros canales con las adaptaciones propias de cada uno.</p>
-</div>
-
 <hr>
 
 <!-- ==================== SECCION 1 ==================== -->
-<h2 id="s1">1. Analisis del Flujo Actual vs Flujo Propuesto</h2>
+<h2 id="s1">Flujo de navegacion — Canal Web</h2>
 
-<h3>1.1 Flujo Actual (preaprobadoquac-client)</h3>
+<p>Antes de proponer cambios, repasemos como funciona hoy el proceso de solicitud de cupo cuando un cliente ingresa por la web.</p>
+
+<h3 id="flujo-actual">Flujo actual (preaprobadoquac-client)</h3>
 
 <pre><code>1. Documento (CC) + TyC checkbox
 2. Celular
@@ -563,17 +560,16 @@ hr {
 
 <p><strong>Caracteristicas:</strong></p>
 <ul>
-  <li>No hay captura de fotos ni prueba de vida</li>
+  <li>La captura de fotos y prueba de vida no hace parte de este flujo. Existe un proceso aparte llamado "activacion de cupo" que se encarga de eso</li>
   <li>No hay validacion de antecedentes judiciales</li>
   <li>No hay validacion FOSIGA</li>
   <li>No hay verificacion Ubica</li>
   <li>No recopila datos de residencia (departamento, ciudad, direccion, barrio)</li>
-  <li>La consulta a Preselecta requiere: <code>documento</code> + <code>primer apellido</code> + <code>fecha de expedicion</code></li>
   <li>CrossCore es el unico mecanismo de verificacion de identidad</li>
 </ul>
 
 <!-- EMBUDO -->
-<h2 id="s1-2">1.2 Datos Reales del Embudo de Solicitudes</h2>
+<h2 id="s1-2">Embudo de solicitudes</h2>
 
 <p>Consultando la base de datos <code>quacapi.credit_request</code> de los ultimos 6 meses, se identifico el embudo real de conversion:</p>
 
@@ -612,7 +608,7 @@ hr {
 
 <h3>Hallazgos clave</h3>
 <ol>
-  <li><strong>Solo el ~13% de las solicitudes resultan viables.</strong> Si las fotos y validaciones costosas (Rekognition, Ubica) van despues de Preselecta, nos ahorramos esos costos en el 87% de los casos.</li>
+  <li><strong>Solo el ~13% de las solicitudes resultan viables.</strong> Si las fotos y validaciones que generan costo (Rekognition, Ubica) van despues de Preselecta, nos ahorramos ese gasto en el 87% de los casos.</li>
   <li><strong>El ~54% de las solicitudes ni siquiera llegan a Preselecta.</strong> Se pierden antes por abandono, expiracion o validaciones iniciales fallidas.</li>
   <li><strong>De las que llegan a Preselecta, el ~67% no son viables.</strong> Este dato incluye tanto rechazos reales como posibles consultas desperdiciadas por datos incorrectos (primer apellido mal escrito, por ejemplo). No es posible distinguirlos con la data actual, pero es exactamente el riesgo que justifica capturar el primer apellido via OCR antes de consultar Preselecta.</li>
   <li><strong>El volumen mensual oscila entre 5,000 y 10,000 solicitudes</strong>, lo cual hace que cualquier ahorro por solicitud sea significativo.</li>
@@ -620,8 +616,23 @@ hr {
 
 <hr>
 
-<!-- ==================== SECCION 2 ==================== -->
-<h2 id="s2">2. Opcion A: "Descartar primero lo que no cuesta"</h2>
+<!-- ==================== OPCIONES ==================== -->
+<h2 id="opciones">Opciones de flujo evaluadas</h2>
+
+<p>Teniendo en cuenta el flujo actual y los datos del embudo, se exploraron las siguientes opciones para el nuevo flujo:</p>
+
+<ul>
+  <li><strong>Opcion A:</strong> "Descartar primero lo que no cuesta" — datos manuales primero, validaciones con costo despues</li>
+  <li><strong>Opcion B:</strong> Fotos tempranas — capturar las 3 fotos antes de Preselecta</li>
+  <li><strong>Opcion C:</strong> TyC combinado con datos basicos — un solo formulario con todo</li>
+  <li><strong>Opcion E:</strong> Foto frontal temprana para OCR — solo la foto frontal antes de Preselecta <span class="badge badge--accent">RECOMENDADA</span></li>
+</ul>
+
+<p>A continuacion el detalle de cada una.</p>
+
+<hr>
+
+<h3 id="s2">Opcion A: "Descartar primero lo que no cuesta"</h3>
 
 <p>Optimiza la experiencia del usuario minimizando abandono y valida lo mas economico primero antes de consumir servicios pagos (Preselecta, FOSIGA, Ubica, Rekognition).</p>
 
@@ -1114,9 +1125,9 @@ FASE 7: RESULTADO
 <hr>
 
 <!-- ==================== SECCION 3 ==================== -->
-<h2 id="s3">3. Flujos Alternativos</h2>
+<h2 id="s3">Flujos alternativos</h2>
 
-<h3 id="s3-1">3.1 Opcion B: Fotos Tempranas (despues de documento)</h3>
+<h3 id="s3-1">Opcion B: Fotos Tempranas (despues de documento)</h3>
 
 <p><strong>Propuesto por:</strong> Miembro del equipo<br>
 <strong>Concepto:</strong> Capturar fotos inmediatamente despues del tipo/numero de documento.</p>
@@ -1150,7 +1161,7 @@ FASE 7: RESULTADO
   <p><strong>Riesgo de costo:</strong> Solo el ~13% de las solicitudes mensuales resultan viables en Preselecta. Si las fotos van antes, el 87% del costo de Rekognition seria desperdiciado. Con ~5,000-10,000 solicitudes/mes, esto se acumula rapidamente.</p>
 </div>
 
-<h3 id="s3-2">3.2 Opcion C: TyC Combinado con Datos Basicos</h3>
+<h3 id="s3-2">Opcion C: TyC Combinado con Datos Basicos</h3>
 
 <p><strong>Propuesto por:</strong> Miembro del equipo<br>
 <strong>Concepto:</strong> Fusionar TyC con un formulario de datos basicos.</p>
@@ -1229,7 +1240,7 @@ FASE 7: RESULTADO
 </div>
 
 <!-- ==================== OPCION E ==================== -->
-<h3 id="s3-3">3.3 Opcion E: Foto Frontal Temprana para OCR <span class="badge badge--accent">FLUJO RECOMENDADO</span></h3>
+<h3 id="s3-3">Opcion E: Foto Frontal Temprana para OCR <span class="badge badge--accent">FLUJO RECOMENDADO</span></h3>
 
 <p><strong>Origen:</strong> Esta opcion nace de la pregunta clave sobre como garantizar que el primer apellido se ingrese correctamente para no malgastar consultas a Preselecta. Preselecta requiere <code>documento + primer apellido exacto + fecha expedicion</code>, y si el usuario escribe mal el apellido (ej: pone ambos apellidos, o con tildes/errores), la consulta se desperdicia.</p>
 
@@ -1256,7 +1267,7 @@ FASE 7: RESULTADO
   <li><strong>Primer apellido confiable:</strong> Viene del OCR del documento, no de lo que el usuario tipea. Esto elimina el problema de apellidos mal escritos, con ambos apellidos juntos, o con tildes incorrectas</li>
   <li><strong>Costo minimo:</strong> Solo una llamada a DetectText (~$0.002) antes del Preselecta o a la IA Api Gemini.</li>
   <li><strong>Autocompletado de datos:</strong> Nombre, apellidos y potencialmente fecha de expedicion se pueden autocompletar, reduciendo errores humanos en TODOS los campos criticos</li>
-  <li><strong>Mantiene ahorro en Rekognition:</strong> Selfie + reverso (las validaciones costosas: CompareFaces, DetectFaces, SearchFacesByImage) siguen despues del Preselecta. Solo el ~13% de solicitudes son viables, asi que nos ahorramos Rekognition completo en el ~87% de los casos</li>
+  <li><strong>Mantiene ahorro en Rekognition:</strong> Selfie + reverso (las validaciones que generan costo: CompareFaces, DetectFaces, SearchFacesByImage) siguen despues del Preselecta. Solo el ~13% de solicitudes son viables, asi que nos ahorramos Rekognition completo en el ~87% de los casos</li>
   <li><strong>Mejor UX:</strong> El usuario ve sus datos ya prellenados y solo confirma/corrige, en vez de tipear todo manualmente</li>
 </ul>
 
@@ -1457,7 +1468,7 @@ FASE 7: RESULTADO
 <hr>
 
 <!-- ==================== SECCION 4 ==================== -->
-<h2 id="s4">4. Preguntas Clave</h2>
+<h2 id="s4">Preguntas clave</h2>
 
 <h3 id="p1">P1: Que pasa si la consulta FOSIGA tarda mas de 2 minutos?</h3>
 
